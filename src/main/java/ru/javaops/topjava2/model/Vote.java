@@ -7,7 +7,6 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
@@ -17,9 +16,9 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @ToString(callSuper = true)
-public class Vote extends BaseEntity implements Serializable {
+public class Vote extends BaseEntity{
 
-    @Column(name = "date", nullable = false, columnDefinition = "timestamp default now()")
+    @Column(name = "date", nullable = false, columnDefinition = "date default now()")
     @NotNull
     private LocalDate date;
 

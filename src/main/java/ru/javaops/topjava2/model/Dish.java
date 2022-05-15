@@ -7,7 +7,6 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
@@ -16,12 +15,12 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(callSuper = true)
-public class Dish extends NamedEntity implements Serializable {
+public class Dish extends NamedEntity{
     @Column(name = "price", nullable = false)
     @NotNull
     private Integer price;
 
-    @Column(name = "date", nullable = false, columnDefinition = "timestamp default now()")
+    @Column(name = "date", nullable = false, columnDefinition = "date default now()")
     @NotNull
     private LocalDate date;
 

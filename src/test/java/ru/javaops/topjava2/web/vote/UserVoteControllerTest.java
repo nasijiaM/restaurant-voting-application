@@ -11,12 +11,15 @@ import ru.javaops.topjava2.repository.VoteRepository;
 import ru.javaops.topjava2.util.JsonUtil;
 import ru.javaops.topjava2.web.AbstractControllerTest;
 
+import java.time.LocalTime;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.javaops.topjava2.web.restaurant.RestaurantTestData.NOT_FOUND;
 import static ru.javaops.topjava2.web.user.UserTestData.USER_MAIL;
 import static ru.javaops.topjava2.web.user.UserTestData.ADMIN_MAIL;
+import static ru.javaops.topjava2.web.vote.UserVoteController.DEADLINE;
 import static ru.javaops.topjava2.web.vote.UserVoteController.REST_URL;
 import static ru.javaops.topjava2.web.vote.VoteTestData.*;
 
@@ -58,15 +61,23 @@ class UserVoteControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = USER_MAIL)
     void createWithLocation() throws Exception {
-        Vote newVote = getNew();
-        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
-                .param("id", "2")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(newVote)));
+        if (LocalTime.now().isAfter(DEADLINE)) {
+            perform(MockMvcRequestBuilders.post(REST_URL)
+                    .param("id", "2")
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isForbidden());
+        }
+        else {
+            Vote newVote = getNew();
+            ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
+                    .param("id", "2")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(JsonUtil.writeValue(newVote)));
 
-        Vote created = VOTE_MATCHER.readFromJson(action);
-        int newId = created.id();
-        newVote.setId(newId);
-        VOTE_MATCHER.assertMatch(created, newVote);
+            Vote created = VOTE_MATCHER.readFromJson(action);
+            int newId = created.id();
+            newVote.setId(newId);
+            VOTE_MATCHER.assertMatch(created, newVote);
+        }
     }
 }
