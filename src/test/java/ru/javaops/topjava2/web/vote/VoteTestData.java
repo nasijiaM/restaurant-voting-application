@@ -12,9 +12,9 @@ public class VoteTestData {
 
     public static final int VOTE1_ID = 1;
 
-    public static final Vote vote1 = new Vote(VOTE1_ID, LocalDate.now(), restaurant1WithoutDishes);
+    public static final Vote vote1 = new Vote(VOTE1_ID, LocalDate.now(), restaurant1WithoutMenuItems);
 
     public static Vote getNew() {
-        return new Vote(null, LocalDate.now(), restaurant2WithoutDishes);
+        return new Vote(null, LocalDate.now(), restaurant2WithoutMenuItems);
     }
 }

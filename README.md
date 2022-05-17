@@ -1,7 +1,7 @@
 A voting system for deciding where to have lunch.
 ===============================
 - 2 types of users: admin and regular users
-- Admin can input a restaurant and it's lunch menu of the day (2-5 items usually, just a dish name and price)
+- Admin can input a restaurant and it's lunch menu of the day (2-5 items usually, just a menuItem name and price)
 - Menu changes each day (admins do the updates)
 - Users can vote on which restaurant they want to have lunch at
 - Only one vote counted per user
@@ -12,7 +12,7 @@ A voting system for deciding where to have lunch.
 Each restaurant provides a new menu each day.
 
 -------------------------------------------------------------
-- Stack: [JDK 17](http://jdk.java.net/17/), Spring Boot 2.5, Lombok, H2, Caffeine Cache, Swagger/OpenAPI 3.0, Mapstruct, Liquibase 
+- Stack: [JDK 17](http://jdk.java.net/17/), Spring Boot 2.5, Lombok, H2, Caffeine Cache, Swagger/OpenAPI 3.0
 - Run: `mvn spring-boot:run` in root directory.
 -----------------------------------------------------
 [REST API documentation](http://localhost:8080/swagger-ui.html)  
@@ -35,14 +35,14 @@ Admin: admin@gmail.com / admin
 #### get Profile
 `curl -s http://localhost:8080/api/profile --user test@mail.ru:test-password`
 
-#### get All Dishes
-`curl -s http://localhost:8080/api/admin/dishes --user admin@gmail.com:admin`
+#### get All MenuItems
+`curl -s http://localhost:8080/api/admin/menu-items --user admin@gmail.com:admin`
 
-#### get Dish 3
-`curl -s http://localhost:8080/api/admin/dishes/3  --user admin@gmail.com:admin`
+#### get MenuItem 3
+`curl -s http://localhost:8080/api/admin/menu-items/3  --user admin@gmail.com:admin`
 
-#### get All Restaurants with Dishes
-`curl -s http://localhost:8080/api/restaurants/with-dishes --user user@yandex.ru:password`
+#### get All Restaurants with MenuItems
+`curl -s http://localhost:8080/api/restaurants/with-menu-items --user user@yandex.ru:password`
 
 #### delete Restaurant
 `curl -s -X DELETE http://localhost:8080/api/admin/restaurants/2 --user admin@gmail.com:admin`

@@ -22,8 +22,8 @@ public class AbstractRestaurantController {
         return checkNotFoundWithId(repository.findById(id).orElse(null), id);
     }
 
-    public List<Restaurant> getWithDishes() {
-        log.info("getWithDishes");
-        return repository.getWithDishes(LocalDate.now());
+    public List<Restaurant> getWithMenuItems() {
+        log.info("getWithMenuItems");
+        return repository.getWithMenuItems(LocalDate.now());
     }
 }

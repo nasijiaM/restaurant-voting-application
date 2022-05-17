@@ -7,11 +7,11 @@ VALUES ('USER', 1),
        ('ADMIN', 2),
        ('USER', 2);
 
-INSERT INTO RESTAURANTS(name)
+INSERT INTO RESTAURANT(name)
 VALUES ('FirstRestaurant'),
        ('SecondRestaurant');
 
-INSERT INTO DISHES(restaurant_id, name, price)
+INSERT INTO MENUITEM(restaurant_id, name, price)
 VALUES (1, 'Fish', 250),
        (1, 'Rice', 100),
        (1, 'Tea', 20),
@@ -19,6 +19,6 @@ VALUES (1, 'Fish', 250),
        (2, 'Pasta', 100),
        (2, 'Coffee', 40);
 
-INSERT INTO VOTES(restaurant_id, user_id)
+INSERT INTO VOTE(restaurant_id, user_id)
 VALUES (1, 1),
        (2, 2);

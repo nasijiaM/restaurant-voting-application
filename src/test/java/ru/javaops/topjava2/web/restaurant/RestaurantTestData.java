@@ -5,11 +5,11 @@ import ru.javaops.topjava2.web.MatcherFactory;
 
 import java.util.List;
 
-import static ru.javaops.topjava2.web.dish.DishTestData.*;
+import static ru.javaops.topjava2.web.menuItem.MenuItemTestData.*;
 
 public class RestaurantTestData {
 
-    public static MatcherFactory.Matcher<Restaurant> RESTAURANT_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Restaurant.class, "dishes");
+    public static MatcherFactory.Matcher<Restaurant> RESTAURANT_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Restaurant.class, "menuItems");
 
     public static final int RESTAURANT_ID1 = 1;
     public static final int RESTAURANT_ID2 = 2;
@@ -17,12 +17,12 @@ public class RestaurantTestData {
 
     public static final Restaurant restaurant1 = new Restaurant(RESTAURANT_ID1, "FirstRestaurant");
     public static final Restaurant restaurant2 = new Restaurant(RESTAURANT_ID2, "SecondRestaurant");
-    public static final Restaurant restaurant1WithoutDishes = new Restaurant(RESTAURANT_ID1, "FirstRestaurant");
-    public static final Restaurant restaurant2WithoutDishes = new Restaurant(RESTAURANT_ID2, "SecondRestaurant");
+    public static final Restaurant restaurant1WithoutMenuItems = new Restaurant(RESTAURANT_ID1, "FirstRestaurant");
+    public static final Restaurant restaurant2WithoutMenuItems = new Restaurant(RESTAURANT_ID2, "SecondRestaurant");
 
     static {
-        restaurant1.setDishes(List.of(dish1, dish2, dish3));
-        restaurant2.setDishes(List.of(dish4, dish5, dish6));
+        restaurant1.setMenuItems(List.of(MENU_ITEM_1, MENU_ITEM_2, MENU_ITEM_3));
+        restaurant2.setMenuItems(List.of(MENU_ITEM_4, MENU_ITEM_5, MENU_ITEM_6));
     }
 
     public static Restaurant getNew() {

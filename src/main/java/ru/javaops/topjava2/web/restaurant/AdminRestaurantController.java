@@ -11,7 +11,6 @@ import ru.javaops.topjava2.model.Restaurant;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.time.LocalDate;
 import java.util.List;
 
 import static ru.javaops.topjava2.util.validation.ValidationUtil.*;
@@ -41,9 +40,9 @@ public class AdminRestaurantController extends AbstractRestaurantController {
         return repository.findAll();
     }
 
-    @GetMapping("/with-dishes")
-    public List<Restaurant> getWithDishes() {
-        return super.getWithDishes();
+    @GetMapping("/with-menu-items")
+    public List<Restaurant> getWithMenuItems() {
+        return super.getWithMenuItems();
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

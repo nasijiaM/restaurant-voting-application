@@ -14,8 +14,8 @@ public class UserRestaurantController extends AbstractRestaurantController {
 
     static final String REST_URL = "/api/restaurants";
 
-    @GetMapping("/with-dishes")
-    public List<Restaurant> getWithDishes() {
-        return super.getWithDishes();
+    @GetMapping("/with-menu-items")
+    public List<Restaurant> getWithMenuItems() {
+        return super.getWithMenuItems();
     }
 }

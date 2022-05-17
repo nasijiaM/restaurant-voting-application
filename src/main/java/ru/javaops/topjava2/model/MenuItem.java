@@ -10,12 +10,13 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "dishes")
+@Table(name = "menuitem",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"date", "name"}, name = "uk_menuitem_date_name")})
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(callSuper = true)
-public class Dish extends NamedEntity{
+public class MenuItem extends NamedEntity{
     @Column(name = "price", nullable = false)
     @NotNull
     private Integer price;
@@ -29,22 +30,21 @@ public class Dish extends NamedEntity{
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
     @JsonBackReference
+    @ToString.Exclude
     private Restaurant restaurant;
 
-    public Dish(Integer id, String name, Integer price, LocalDate date) {
+    public MenuItem(Integer id, String name, Integer price, LocalDate date) {
         super(id, name);
         this.price = price;
         this.date = date;
     }
 
-    public Dish(Dish dish) {
-        this(dish.id, dish.name, dish.price, dish.date);
+    public MenuItem(MenuItem menuItem) {
+        this(menuItem.id, menuItem.name, menuItem.price, menuItem.date);
     }
 
-    public Dish(Integer id, String name, Integer price, LocalDate date, Restaurant restaurant) {
-        super(id, name);
-        this.price = price;
-        this.date = date;
+    public MenuItem(Integer id, String name, Integer price, LocalDate date, Restaurant restaurant) {
+        this(id, name, price, date);
         this.restaurant = restaurant;
     }
 }

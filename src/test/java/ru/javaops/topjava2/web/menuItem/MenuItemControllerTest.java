@@ -1,4 +1,4 @@
-package ru.javaops.topjava2.web.dish;
+package ru.javaops.topjava2.web.menuItem;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,30 +13,30 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.javaops.topjava2.web.user.UserTestData.ADMIN_MAIL;
-import static ru.javaops.topjava2.web.dish.DishController.REST_URL;
-import static ru.javaops.topjava2.web.dish.DishTestData.*;
+import static ru.javaops.topjava2.web.menuItem.MenuItemController.REST_URL;
+import static ru.javaops.topjava2.web.menuItem.MenuItemTestData.*;
 import static ru.javaops.topjava2.web.user.UserTestData.NOT_FOUND;
 
-class DishControllerTest extends AbstractControllerTest {
+class MenuItemControllerTest extends AbstractControllerTest {
 
     @Autowired
-    DishController dishController;
+    MenuItemController menuItemController;
 
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "/" + DISH1_ID))
+        perform(MockMvcRequestBuilders.get(REST_URL + "/" + MENUITEM_ID1))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(DISH_MATCHER.contentJson(dish1));
+                .andExpect(MENU_ITEM_MATCHER.contentJson(MENU_ITEM_1));
     }
 
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void delete() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL + "/" + DISH1_ID))
+        perform(MockMvcRequestBuilders.delete(REST_URL + "/" + MENUITEM_ID1))
                 .andExpect(status().isNoContent());
-        assertThrows(NotFoundException.class, () -> dishController.get(DISH1_ID));
+        assertThrows(NotFoundException.class, () -> menuItemController.get(MENUITEM_ID1));
     }
 
     @Test
@@ -53,6 +53,6 @@ class DishControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(DISH_MATCHER.contentJson(dish1, dish2, dish3, dish4, dish5, dish6));
+                .andExpect(MENU_ITEM_MATCHER.contentJson(MENU_ITEM_1, MENU_ITEM_2, MENU_ITEM_3, MENU_ITEM_4, MENU_ITEM_5, MENU_ITEM_6));
     }
 }
