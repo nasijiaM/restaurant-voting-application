@@ -54,7 +54,7 @@ Admin: admin@gmail.com / admin
 `curl -s http://localhost:8080/api/admin/restaurants/2  --user admin@gmail.com:admin`
 
 #### vote
-`curl -X POST -H 'Content-Type: application/json' -i 'http://localhost:8080/api/votes?id=2' --data '{
+`curl -X POST -H 'Content-Type: application/json' -i 'http://localhost:8080/api/votes?restaurantId=2' --data '{
 "id": 2
 }' --user user@yandex.ru:password`
 

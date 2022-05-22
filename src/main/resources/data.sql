@@ -20,5 +20,8 @@ VALUES (1, 'Fish', 250),
        (2, 'Coffee', 40);
 
 INSERT INTO VOTE(restaurant_id, user_id)
-VALUES (1, 1),
-       (2, 2);
+VALUES (2, 2);
+
+INSERT INTO VOTE(restaurant_id, user_id, date)
+VALUES (1, 1, '2022-05-15'),
+       (2, 2, '2022-05-15');

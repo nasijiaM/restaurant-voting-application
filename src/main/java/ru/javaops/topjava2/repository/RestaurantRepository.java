@@ -11,7 +11,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 public interface RestaurantRepository extends BaseRepository<Restaurant> {
 
-    @EntityGraph(attributePaths = {"dishes"}, type = EntityGraph.EntityGraphType.LOAD)
+    @EntityGraph(attributePaths = {"menuItems"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT r FROM Restaurant r LEFT JOIN FETCH r.menuItems d WHERE d.date=?1")
     List<Restaurant> getWithMenuItems(LocalDate date);
 }

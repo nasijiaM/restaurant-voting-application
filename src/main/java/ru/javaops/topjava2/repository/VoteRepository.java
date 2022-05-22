@@ -23,4 +23,7 @@ public interface VoteRepository extends BaseRepository<Vote> {
     @EntityGraph(attributePaths = {"restaurant"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT v FROM Vote v WHERE v.date=?1 AND v.user.id=?2")
     Optional<Vote> findByDateAndUserId(LocalDate date, int userId);
+
+    @Query("SELECT v FROM Vote v WHERE v.id=?1 AND v.user.id=?2")
+    Optional<Vote> findByIdAndUserId(int it, int userId);
 }

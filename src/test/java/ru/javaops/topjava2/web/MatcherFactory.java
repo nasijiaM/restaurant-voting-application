@@ -29,6 +29,12 @@ public class MatcherFactory {
                 (a, e) -> assertThat(a).usingElementComparatorIgnoringFields(fieldsToIgnore).isEqualTo(e));
     }
 
+    public static <T> Matcher<T> usingEqualsComparator(Class<T> clazz) {
+        return usingAssertions(clazz,
+                (a, e) -> assertThat(a).isEqualTo(e),
+                (a, e) -> assertThat(a).isEqualTo(e));
+    }
+
     public static class Matcher<T> {
         private final Class<T> clazz;
         private final BiConsumer<T, T> assertion;

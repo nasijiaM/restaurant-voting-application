@@ -1,6 +1,5 @@
 package ru.javaops.topjava2.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -34,7 +33,6 @@ public class Vote extends BaseEntity{
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
     @ToString.Exclude
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private User user;
 
     public Vote(Integer id, LocalDate date) {
@@ -45,5 +43,10 @@ public class Vote extends BaseEntity{
     public Vote(Integer id, LocalDate date, Restaurant restaurant) {
         this(id, date);
         this.restaurant = restaurant;
+    }
+
+    public Vote(Integer id, LocalDate date, Restaurant restaurant, User user) {
+        this(id, date, restaurant);
+        this.user = user;
     }
 }
