@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javaops.topjava2.model.MenuItem;
 import ru.javaops.topjava2.repository.MenuItemRepository;
+import ru.javaops.topjava2.repository.RestaurantRepository;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -28,6 +29,9 @@ public class AdminMenuItemController {
     @Autowired
     private MenuItemRepository repository;
 
+    @Autowired
+    private RestaurantRepository restaurantRepository;
+
     @GetMapping("/{id}")
     public MenuItem get(@PathVariable int id) {
         log.info("get {}", id);
@@ -43,21 +47,23 @@ public class AdminMenuItemController {
 
     @GetMapping("/by-restaurant")
     public List<MenuItem> getAllByRestaurant(@RequestParam int restaurantId) {
-        log.info("getAll by restaurant with id " + restaurantId);
+        log.info("getAll by restaurant with id {}", restaurantId);
         return repository.getAllByRestaurant(restaurantId);
     }
 
     @GetMapping("/by-restaurant-and-date")
     public List<MenuItem> getAllByRestaurantAndDate(@RequestParam int restaurantId,
                                                     @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate localDate) {
-        log.info("getAll by restaurantId and date {}" + restaurantId, localDate);
+        log.info("getAll by restaurantId {} and date {}", restaurantId, localDate);
         return repository.getAllByRestaurantAndDate(restaurantId, localDate);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MenuItem> createWithLocation(@Valid @RequestBody MenuItem menuItem) {
+    public ResponseEntity<MenuItem> createWithLocation(@Valid @RequestBody MenuItem menuItem,
+                                                       @RequestParam int restaurantId) {
         log.info("create {}", menuItem);
         checkNew(menuItem);
+        menuItem.setRestaurant(restaurantRepository.findById(restaurantId).orElse(null));
         MenuItem created = repository.save(menuItem);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()

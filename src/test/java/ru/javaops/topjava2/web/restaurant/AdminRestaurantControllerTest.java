@@ -11,12 +11,11 @@ import ru.javaops.topjava2.repository.RestaurantRepository;
 import ru.javaops.topjava2.util.JsonUtil;
 import ru.javaops.topjava2.web.AbstractControllerTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.javaops.topjava2.web.restaurant.RestaurantTestData.*;
-import static ru.javaops.topjava2.web.restaurant.RestaurantTestData.NOT_FOUND;
 import static ru.javaops.topjava2.web.user.UserTestData.ADMIN_MAIL;
 
 class AdminRestaurantControllerTest extends AbstractControllerTest {

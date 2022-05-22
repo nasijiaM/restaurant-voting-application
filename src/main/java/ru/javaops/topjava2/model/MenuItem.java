@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(callSuper = true)
-public class MenuItem extends NamedEntity{
+public class MenuItem extends NamedEntity {
     @Column(name = "price", nullable = false)
     @NotNull
     private Integer price;
@@ -28,7 +28,6 @@ public class MenuItem extends NamedEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @NotNull
     @JsonBackReference
     @ToString.Exclude
     private Restaurant restaurant;

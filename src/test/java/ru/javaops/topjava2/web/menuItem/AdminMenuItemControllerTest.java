@@ -4,8 +4,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.javaops.topjava2.error.NotFoundException;
+import ru.javaops.topjava2.model.MenuItem;
+import ru.javaops.topjava2.util.JsonUtil;
 import ru.javaops.topjava2.web.AbstractControllerTest;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -55,5 +58,32 @@ class AdminMenuItemControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(MENU_ITEM_MATCHER.contentJson(MENU_ITEM_1, MENU_ITEM_2, MENU_ITEM_3));
+    }
+
+    @Test
+    @WithUserDetails(value = ADMIN_MAIL)
+    void createWithLocation() throws Exception {
+        MenuItem newMenuItem = getNew();
+        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
+                .param("restaurantId", "1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(newMenuItem)));
+
+        MenuItem created = MENU_ITEM_MATCHER.readFromJson(action);
+        int newId = created.id();
+        newMenuItem.setId(newId);
+        MENU_ITEM_MATCHER.assertMatch(created, newMenuItem);
+        MENU_ITEM_MATCHER.assertMatch(adminMenuItemController.get(newId), newMenuItem);
+    }
+
+    @Test
+    @WithUserDetails(value = ADMIN_MAIL)
+    void update() throws Exception {
+        MenuItem updated = getUpdated();
+        perform(MockMvcRequestBuilders.put(REST_URL + "/" + MENUITEM_ID1).contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(updated)))
+                .andExpect(status().isNoContent());
+
+        MENU_ITEM_MATCHER.assertMatch(adminMenuItemController.get(MENUITEM_ID1), updated);
     }
 }
