@@ -12,6 +12,10 @@ import java.util.List;
 public interface RestaurantRepository extends BaseRepository<Restaurant> {
 
     @EntityGraph(attributePaths = {"menuItems"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT r FROM Restaurant r LEFT JOIN FETCH r.menuItems d WHERE d.date=?1")
+    @Query("SELECT r FROM Restaurant r LEFT JOIN FETCH r.menuItems d WHERE d.date=?1 ORDER BY r.name ASC")
     List<Restaurant> getWithMenuItems(LocalDate date);
+
+    @EntityGraph(attributePaths = {"menuItems"}, type = EntityGraph.EntityGraphType.LOAD)
+    @Query("SELECT r FROM Restaurant r LEFT JOIN FETCH r.menuItems d WHERE d.date=?1 ORDER BY r.name ASC")
+    List<Restaurant> getWithMenuItemsByDate(LocalDate date);
 }

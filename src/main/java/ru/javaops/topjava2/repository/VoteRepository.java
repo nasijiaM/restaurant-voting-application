@@ -13,11 +13,11 @@ import java.util.Optional;
 public interface VoteRepository extends BaseRepository<Vote> {
 
     @EntityGraph(attributePaths = {"restaurant"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT v FROM Vote v WHERE v.id=?1")
-    Optional<Vote> getWithRestaurant(int id);
+    @Query("SELECT v FROM Vote v WHERE v.id=?1 AND v.user.id=?2")
+    Optional<Vote> getWithRestaurant(int voteId, int userId);
 
     @EntityGraph(attributePaths = {"restaurant"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT v FROM Vote v WHERE v.user.id=?1")
+    @Query("SELECT v FROM Vote v WHERE v.user.id=?1 ORDER BY v.date DESC")
     List<Vote> getAll(int userId);
 
     @EntityGraph(attributePaths = {"restaurant"}, type = EntityGraph.EntityGraphType.LOAD)

@@ -2,10 +2,10 @@ package ru.javaops.topjava2.web.menuItem;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javaops.topjava2.model.MenuItem;
@@ -13,14 +13,15 @@ import ru.javaops.topjava2.repository.MenuItemRepository;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 
 import static ru.javaops.topjava2.util.validation.ValidationUtil.*;
 
 @RestController
-@RequestMapping(value = MenuItemController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = AdminMenuItemController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
-public class MenuItemController {
+public class AdminMenuItemController {
 
     static final String REST_URL = "/api/admin/menu-items";
 
@@ -40,14 +41,20 @@ public class MenuItemController {
         repository.deleteExisted(id);
     }
 
-    @GetMapping
-    public List<MenuItem> getAll() {
-        log.info("getAll");
-        return repository.findAll();
+    @GetMapping("/by-restaurant")
+    public List<MenuItem> getAllByRestaurant(@RequestParam int restaurantId) {
+        log.info("getAll by restaurant with id " + restaurantId);
+        return repository.getAllByRestaurant(restaurantId);
+    }
+
+    @GetMapping("/by-restaurant-and-date")
+    public List<MenuItem> getAllByRestaurantAndDate(@RequestParam int restaurantId,
+                                                    @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate localDate) {
+        log.info("getAll by restaurantId and date {}" + restaurantId, localDate);
+        return repository.getAllByRestaurantAndDate(restaurantId, localDate);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @Transactional
     public ResponseEntity<MenuItem> createWithLocation(@Valid @RequestBody MenuItem menuItem) {
         log.info("create {}", menuItem);
         checkNew(menuItem);
@@ -61,7 +68,6 @@ public class MenuItemController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Transactional
     public void update(@Valid @RequestBody MenuItem menuItem, @PathVariable int id) {
         log.info("update {} with id={}", menuItem, id);
         assureIdConsistent(menuItem, id);
