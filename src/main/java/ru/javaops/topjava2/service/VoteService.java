@@ -24,7 +24,7 @@ public class VoteService {
 
     private RestaurantRepository restaurantRepository;
 
-    public static final LocalTime DEADLINE = LocalTime.of(23, 45);
+    public static final LocalTime DEADLINE = LocalTime.of(11, 00);
 
     public VoteService(VoteRepository voteRepository, RestaurantRepository restaurantRepository) {
         this.voteRepository = voteRepository;
